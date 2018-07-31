@@ -1,0 +1,44 @@
+<p id="notice"><% notice %></p>
+
+<h1>Catalog</h1>
+<table class="catalog">
+    <% @items.each do |item| %>
+    <tr>
+        <td>
+            <div class="image">
+                <%= link_to (image_tag item.image_url, :style =>"height:100px") ,item %>    
+            </div>    
+        </td>
+        <td>
+            <div class="title">
+                <%= link_to item.title ,item %>    
+            </div>       
+            <div class="description">
+                <%= link_to item.description ,item %>    
+            </div>       
+            <div class="price">
+                <%= link_to item.price ,item %>    
+            </div>
+            <div class="links">
+                <% if session[:login] == 1 %>
+                    <%= link_to 'Edit', edit_item_path(item) %>
+                    <%= link_to 'Destroy', item, method: :delete, data: { confirm: 'Are you sure?' } %>                
+                                   
+                <% else %>                
+                    <a href="/cart/<%= item.id %>">Add To Cart</a><br><br>
+                <% end %>
+            </div>
+        </td>
+        
+    
+    </tr>
+    <% end %>
+
+</table>
+<% if session[:login] == 1 %>
+    <p><%= link_to 'New Item', new_item_path %></p>
+<% end %>
+
+
+
+<%= link_to 'New Item', new_item_path %>
